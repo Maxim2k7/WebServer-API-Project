@@ -21,6 +21,11 @@ def weather_main(region):
 def reporter_enter():
     return render_template('form.html')
 
+# Регистрация погодного репортера
+@app.route('/reporter/registration')
+def reporter_registration():
+    pass
+
 # Добавление информации
 @app.route('/reporter/edit')
 def reporter_main():
