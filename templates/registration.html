@@ -6,7 +6,7 @@
     {{ form.hidden_tag() }}
     <p>
         {{ form.email.label }}<br>
-        {{ form.email(class="form-control", type="email") }}<br>
+        {{ form.email(class="form-control", type="email", placeholder="name@example.com") }}<br>
         {% for error in form.email.errors %}
     <p class="alert alert-danger" role="alert">
         {{ error }}
@@ -16,7 +16,7 @@
 
     <p>
         {{ form.password.label }}<br>
-        {{ form.password(class="form-control", type="password") }}<br>
+        {{ form.password(class="form-control", type="password")}}<br>
         {% for error in form.password.errors %}
     <p class="alert alert-danger" role="alert">
         {{ error }}
@@ -58,16 +58,6 @@
         {{ form.surname.label }}<br>
         {{ form.surname(class="form-control") }}<br>
         {% for error in form.surname.errors %}
-    <p class="alert alert-danger" role="alert">
-        {{ error }}
-    </p>
-    {% endfor %}
-    </p>
-
-    <p>
-        {{ form.about.label }}<br>
-        {{ form.about(class="form-control") }}<br>
-        {% for error in form.about.errors %}
     <p class="alert alert-danger" role="alert">
         {{ error }}
     </p>
