@@ -1,7 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-    <h2 align="center">{{ place }}</h2>
-    <div>
-        And now the weather:
-    </div>
+    {% if found %}
+        <h2 align="center">Погода в {{ place }} на {{ date }}</h2>
+        <p>
+        <table align="center" border="1" width="80%" class="weather">
+            {% for i in data %}
+                <tr align="center">
+                    <th height="50">{{ headers[loop.index0] }}</th>
+                    <td height="50">{{ i }} {{ units[loop.index0] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+        </p>
+    {% else %}
+        <h2 align="center">Такие данные отсутствуют</h2>
+    {% endif %}
+    <a href="../.."><p><h2 align="center">
+        Вернуться на главную
+    </h2></p></a>
 {% endblock %}

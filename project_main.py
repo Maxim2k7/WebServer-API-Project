@@ -1,18 +1,38 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
+from weather_report import find_report
+from forms.find_report import SearchForm
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+# Константы
+weather_params = ["Облачность: ", "Температура воздуха: ", "Температура воды: ", "Тип осадков: ", "Количество осадков: ",
+                  "Направление ветра: ", "Скорость ветра: ", "Атмосферное давление: "]
+measuring_units = ["", "°C", "°C", "", "мм", "", "м/c", "мм рт. ст."]
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-    return render_template('base.html')
+    form = SearchForm()
+    if form.validate_on_submit():
+        ok, result = find_report(form.city.data, form.date.data)
+        if not(ok):
+            return render_template('home_page.html', title='Поиск',
+                                   form=form,
+                                   message="Такие данные отсутствуют")
+        return redirect(f'/weather/{form.city.data}/{form.date.data}')
+    return render_template('home_page.html', title='Поиск', form=form)
 
 
-@app.route('/weather/<region>')
-def weather_main(region):
-    return render_template('location.html', place=region)
+@app.route('/weather/<region>/<date>')
+def weather_main(region, date):
+    ok, result = find_report(region, date)
+    data = [result.clouds, result.temperature, result.water_temperature, result.precipitation_type,
+            result.precipitation_value, result.wind_direction, result.wind_speed, result.atmospheric_pressure]
+    return render_template('location.html', found=ok, place=region, data=data, headers=weather_params,
+                           units=measuring_units, date=date)
 
 
 # Добавление новой записи о погоде
