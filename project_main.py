@@ -1,10 +1,19 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect
+from forms.reporter import RegisterForm
+from data import db_session
+from data.reporters import Reporter
 from weather_report import find_report
 from forms.find_report import SearchForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+
+def main():
+    db_session.global_init('db/weather.db')
+    app.run(port=8080, host="127.0.0.1", debug=True)
+
 
 # Константы
 weather_params = [("Облачность: ", True), ("Температура воздуха: ", False), ("Температура воды: ", False),
@@ -49,4 +58,4 @@ def reporter_main():
 
 
 if __name__ == "__main__":
-    app.run(port=8080, host="127.0.0.1")
+    main()
