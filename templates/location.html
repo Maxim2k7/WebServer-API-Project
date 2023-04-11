@@ -2,6 +2,7 @@
 {% block content %}
     {% if found %}
         <h2 align="center">Погода в {{ place }} на {{ date }}</h2>
+        <p>
         <table align="center" border="1" width="80%" class="weather">
             {% for i in data %}
                 <tr align="center">
@@ -10,7 +11,11 @@
                 </tr>
             {% endfor %}
         </table>
+        </p>
     {% else %}
         <h2 align="center">Такие данные отсутствуют</h2>
     {% endif %}
+    <a href="../.."><p><h2 align="center">
+        Вернуться на главную
+    </h2></p></a>
 {% endblock %}
