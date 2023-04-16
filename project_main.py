@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect
-from forms.reporter import RegisterForm
+from flask_login import login_user
+from forms.reporter import RegisterForm, LoginForm
 from data import db_session
 from data.reporters import Reporter
 from weather_report import find_report
@@ -47,9 +48,19 @@ def weather_main(region, date):
 
 # Добавление новой записи о погоде
 # Вход
-@app.route('/reporter/enter')
-def reporter_enter():
-    return render_template('form.html')
+@app.route('/reporter/enter', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.email == form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/")
+        return render_template('login.html',
+                               message="Неправильный логин или пароль",
+                               form=form)
+    return render_template('login.html', title='Авторизация', form=form)
 
 
 # Регистрация погодного репортера
