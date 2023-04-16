@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect
-from flask_login import login_user, LoginManager
+from flask_login import login_user, LoginManager, login_required, logout_user
 from forms.reporter import RegisterForm, LoginForm
 from data import db_session
 from data.reporters import Reporter
@@ -64,6 +64,7 @@ def login():
             reporter = db_sess.query(Reporter).filter(Reporter.login == form.login.data).first()
         if reporter and reporter.check_password(form.password.data):
             login_user(reporter, remember=form.remember_me.data)
+            print(form.remember_me.data)
             return redirect("/reporter/edit")
         return render_template('authorization.html',
                                message="Неправильный логин/пароль",
@@ -105,8 +106,15 @@ def reporter_registration():
 
 # Добавление информации
 @app.route('/reporter/edit')
+@login_required
 def reporter_main():
     return render_template('reporter.html')
+
+@app.route('/reporter/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect("/")
 
 
 if __name__ == "__main__":
