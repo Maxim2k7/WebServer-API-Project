@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Flask, render_template, redirect
-from flask_login import login_user
+from flask_login import login_user, LoginManager
 from forms.reporter import RegisterForm, LoginForm
 from data import db_session
 from data.reporters import Reporter
@@ -10,6 +10,8 @@ from forms.find_report import SearchForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 def main():
     db_session.global_init('db/weather.db')
@@ -45,6 +47,10 @@ def weather_main(region, date):
     return render_template('location.html', found=ok, place=region, data=data, headers=weather_params,
                            units=measuring_units, date=date)
 
+@login_manager.user_loader
+def load_user(user_id):
+    db_sess = db_session.create_session()
+    return db_sess.query(Reporter).get(user_id)
 
 # Добавление новой записи о погоде
 # Вход
@@ -53,11 +59,13 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = db_sess.query(User).filter(User.email == form.email.data).first()
-        if user and user.check_password(form.password.data):
-            login_user(user, remember=form.remember_me.data)
-            return redirect("/")
-        return render_template('login.html',
+        reporter = db_sess.query(Reporter).filter(Reporter.email == form.login.data).first()
+        if not reporter:
+            reporter = db_sess.query(Reporter).filter(Reporter.login == form.login.data).first()
+        if reporter and reporter.check_password(form.password.data):
+            login_user(reporter, remember=form.remember_me.data)
+            return redirect("/reporter/edit")
+        return render_template('authorization.html',
                                message="Неправильный логин/пароль",
                                form=form)
     return render_template('authorization.html', title='Авторизация', form=form)
