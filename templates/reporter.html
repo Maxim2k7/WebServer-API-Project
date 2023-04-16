@@ -1,5 +1,26 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 style="align: center">Здравствуйте, {{ current_user.name }}!</h1>
+<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+    <div id="liveToast" class="toast fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+        <div class="toast-header">
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214753.png" height="20em" style="padding-right: 10px;">
+
+            <strong class="mr-auto">Дневник погоды</strong>
+            <small>💛</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Здравствуйте, {{ current_user.name }}!
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+  $('.toast').toast('show');
+});
+
+</script>
 {% endblock %}
