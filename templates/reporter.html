@@ -4,7 +4,8 @@
 <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
     <div id="liveToast" class="toast fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
         <div class="toast-header">
-            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214753.png" height="20em" style="padding-right: 10px;">
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214753.png" height="20em"
+                 style="padding-right: 10px;">
 
             <strong class="mr-auto">Дневник погоды</strong>
             <small>💛</small>
@@ -22,5 +23,29 @@ $(document).ready(function(){
   $('.toast').toast('show');
 });
 
+
+
+
 </script>
+</br>
+<div style="width: 50%; margin: auto;  background: linear-gradient(blue, pink); border-radius: 50px;">
+    <div style="display: flex; flex-direction: row; justify-content: space-around; padding-top: 1em">
+        <div>
+            <label for="start">Начало:</label>
+
+            <input type="date" id="start" name="trip-start"
+                   value="2018-07-22"
+                   min="2018-01-01" max="2030-12-31">
+        </div>
+
+        <div>
+            <label for="start">Конец:</label>
+
+            <input type="date" id="end" name="trip-start"
+                   value="2018-07-22"
+                   min="2018-01-01" max="2030-12-31">
+        </div>
+    </div>
+
+</div>
 {% endblock %}
