@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+import datetime
+
 from flask import Flask, render_template, redirect, request
 from flask_login import login_user, LoginManager, login_required, logout_user
 from forms.reporter import RegisterForm, LoginForm
 from data import db_session
 from data.reporters import Reporter
 from weather_report import find_report
+from data.weather import Weather
 from forms.find_report import SearchForm
 
 app = Flask(__name__)
@@ -12,6 +15,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 
 def main():
     db_session.global_init('db/weather.db')
@@ -31,7 +35,7 @@ def index():
     form = SearchForm()
     if form.validate_on_submit():
         ok, result = find_report(form.city.data, form.date.data)
-        if not(ok):
+        if not (ok):
             return render_template('home_page.html', title='Поиск',
                                    form=form,
                                    message="Такие данные отсутствуют")
@@ -47,10 +51,12 @@ def weather_main(region, date):
     return render_template('location.html', found=ok, place=region, data=data, headers=weather_params,
                            units=measuring_units, date=date)
 
+
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
     return db_sess.query(Reporter).get(user_id)
+
 
 # Добавление новой записи о погоде
 # Вход
@@ -111,8 +117,23 @@ def reporter_main():
     if request.method == 'GET':
         return render_template('reporter.html')
     elif request.method == 'POST':
-        print(request.form)
-        return "Форма отправлена"
+        db_sess = db_session.create_session()
+        weather = Weather(
+            location_id = 1,
+            date = datetime.datetime.now(),
+            clouds = request.form['clouds'],
+            temperature = request.form['temperature'],
+            water_temperature = request.form['water_temperature'],
+            precipitation_type = request.form['precipitation_type'],
+            precipitation_value = request.form['precipitation_value'],
+            wind_direction = request.form['wind_direction'],
+            wind_velocity = request.form['wind_velocity'],
+            atmospheric_pressure = request.form['atmospheric_pressure'],
+        )
+        db_sess.merge(weather)
+        db_sess.commit()
+        return redirect('/reporter/edit')
+
 
 @app.route('/reporter/logout')
 @login_required

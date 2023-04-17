@@ -18,6 +18,6 @@ class Weather(SqlAlchemyBase):
     precipitation_type = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     precipitation_value = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     wind_direction = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    wind_speed = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
+    wind_velocity = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     atmospheric_pressure = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     location = orm.relationship('Location')
