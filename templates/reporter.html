@@ -26,26 +26,72 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+
+
+
+
+
 </script>
 </br>
-<div style="width: 50%; margin: auto;  background: linear-gradient(blue, pink); border-radius: 50px;">
-    <div style="display: flex; flex-direction: row; justify-content: space-around; padding-top: 1em">
-        <div>
-            <label for="start">Начало:</label>
+<form class="edit_form" method="post">
+    <div style="width: 70%; margin: auto;  background: linear-gradient(blue, pink); border-radius: 25px; display: flex;
+ flex-direction: column; justify-content: space-around;">
+        <div style="display: flex; flex-direction: row; justify-content: space-around; padding-top: 1em">
+            <div>
+                <label for="start">Начало:</label>
 
-            <input type="date" id="start" name="trip-start"
-                   value="2018-07-22"
-                   min="2018-01-01" max="2030-12-31">
+                <input type="date" id="start" name="trip-start"
+                       value="2018-07-22"
+                       min="2018-01-01" max="2030-12-31">
+            </div>
+
+            <div>
+                <label for="start">Конец:</label>
+
+                <input type="date" id="end" name="trip-end"
+                       value="2018-07-22"
+                       min="2018-01-01" max="2030-12-31">
+            </div>
+        </div>
+        </br>
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Локация</label>
+            <input type="text" class="form-control" id="location" placeholder="Введите локацию" name="location">
+        </div>
+        </br>
+        <div style="width: 70%; margin: auto; display: flex; flex-direction: column;">
+            <label>Температура:
+                <input type="number" id="temperature" name="temperature" step="0.1"
+                       min="-70" max="70">
+            </label>
+            <label for="classSelect">Температура воды:
+                <input type="number" id="water_temperature" name="water_temperature" step="0.1"
+                       min="-70" max="70">
+            </label>
+            <label for="classSelect">Атмосферное давление:
+                <input type="number" id="atmospheric_pressure" name="atmospheric_pressure" step="1"
+                       min="0" max="1000">
+            </label>
+        </div>
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Облачность</label>
+            <input type="text" class="form-control" id="clouds" placeholder="Облачность" name="clouds">
         </div>
 
-        <div>
-            <label for="start">Конец:</label>
-
-            <input type="date" id="end" name="trip-start"
-                   value="2018-07-22"
-                   min="2018-01-01" max="2030-12-31">
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Атмосферные осадки</label>
+            <div style="margin: auto; display: flex; flex-direction: row;">
+                <input type="text" class="form-control" id="precipitation_type" placeholder="Тип"
+                       name="precipitation_type">
+                <input type="number" id="precipitation_value" placeholder="Кол-во" name="precipitation_value" step="1"
+                       min="0" max="10000">
+            </div>
         </div>
+        <button type="submit" class="btn btn-primary">Готово</button>
     </div>
-
-</div>
+</form>
 {% endblock %}

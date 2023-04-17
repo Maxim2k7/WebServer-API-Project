@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from flask_login import login_user, LoginManager, login_required, logout_user
 from forms.reporter import RegisterForm, LoginForm
 from data import db_session
@@ -105,10 +105,14 @@ def reporter_registration():
 
 
 # Добавление информации
-@app.route('/reporter/edit')
+@app.route('/reporter/edit', methods=['POST', 'GET'])
 @login_required
 def reporter_main():
-    return render_template('reporter.html')
+    if request.method == 'GET':
+        return render_template('reporter.html')
+    elif request.method == 'POST':
+        print(request.form)
+        return "Форма отправлена"
 
 @app.route('/reporter/logout')
 @login_required
