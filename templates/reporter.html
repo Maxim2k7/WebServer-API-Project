@@ -35,6 +35,12 @@ $(document).ready(function(){
 
 
 
+
+
+
+
+
+
 </script>
 </br>
 <form class="edit_form" method="post">
@@ -48,7 +54,7 @@ $(document).ready(function(){
                        value="2018-07-22"
                        min="2018-01-01" max="2030-12-31">
             </div>
-
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
             <div>
                 <label for="start">Конец:</label>
 
@@ -60,6 +66,7 @@ $(document).ready(function(){
         </br>
         <div style="width: 70%; margin: auto;">
             <label for="classSelect">Локация</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/535/535137.png">
             <input type="text" class="form-control" id="location" placeholder="Введите локацию" name="location">
         </div>
         </br>
@@ -67,23 +74,30 @@ $(document).ready(function(){
             <label>Температура:
                 <input type="number" id="temperature" name="temperature" step="0.1"
                        min="-70" max="70">
+                <img height="25"
+                     src="https://cdn-icons-png.flaticon.com/512/869/869869.png">
             </label>
+
             <label for="classSelect">Температура воды:
                 <input type="number" id="water_temperature" name="water_temperature" step="0.1"
                        min="-70" max="70">
+                <img height="25" src="https://cdn-icons-png.flaticon.com/512/3274/3274854.png">
             </label>
             <label for="classSelect">Атмосферное давление:
                 <input type="number" id="atmospheric_pressure" name="atmospheric_pressure" step="1"
                        min="0" max="1000">
+                <img height="25" src="https://cdn-icons-png.flaticon.com/512/4005/4005925.png">
             </label>
         </div>
         <div style="width: 70%; margin: auto;">
             <label for="classSelect">Облачность</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/414/414825.png">
             <input type="text" class="form-control" id="clouds" placeholder="Облачность" name="clouds">
         </div>
 
         <div style="width: 70%; margin: auto;">
-            <label for="classSelect">Атмосферные осадки</label>
+            <label for="classSelect">Осадки</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/4958/4958619.png">
             <div style="margin: auto; display: flex; flex-direction: row;">
                 <input type="text" class="form-control" id="precipitation_type" placeholder="Тип"
                        name="precipitation_type">
@@ -91,6 +105,17 @@ $(document).ready(function(){
                        min="0" max="10000">
             </div>
         </div>
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Ветер</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/2676/2676047.png">
+            <div style="margin: auto; display: flex; flex-direction: row;">
+                <input type="text" class="form-control" id="wind_direction" placeholder="Тип"
+                       name="wind_direction">
+                <input type="number" id="wind_velocity" placeholder="Кол-во" name="wind_velocity" step="1"
+                       min="0" max="10000">
+            </div>
+        </div>
+        <!--        <img height="25" src="https://cdn-icons-png.flaticon.com/512/414/414825.png">-->
         <button type="submit" class="btn btn-primary">Готово</button>
     </div>
 </form>
