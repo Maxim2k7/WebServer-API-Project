@@ -47,7 +47,7 @@ def index():
 def weather_main(region, date):
     ok, result = find_report(region, date)
     data = [result.clouds, result.temperature, result.water_temperature, result.precipitation_type,
-            result.precipitation_value, result.wind_direction, result.wind_speed, result.atmospheric_pressure]
+            result.precipitation_value, result.wind_direction, result.wind_velocity, result.atmospheric_pressure]
     return render_template('location.html', found=ok, place=region, data=data, headers=weather_params,
                            units=measuring_units, date=date)
 
@@ -120,7 +120,7 @@ def reporter_main():
         db_sess = db_session.create_session()
         weather = Weather(
             location_id = 1,
-            date = datetime.datetime.now(),
+            date = request.form['date'],
             clouds = request.form['clouds'],
             temperature = request.form['temperature'],
             water_temperature = request.form['water_temperature'],
