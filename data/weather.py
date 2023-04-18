@@ -11,7 +11,7 @@ class Weather(SqlAlchemyBase):
                            primary_key=True, autoincrement=True)
     location_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("locations.id"))
-    date = sqlalchemy.Column(sqlalchemy.String, default=datetime.date.today())
+    date = sqlalchemy.Column(sqlalchemy.Date, default=datetime.date.today())
     clouds = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     temperature = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     water_temperature = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)

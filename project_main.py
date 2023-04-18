@@ -3,8 +3,10 @@ from flask import Flask, render_template, redirect
 from forms.reporter import RegisterForm
 from data import db_session
 from data.reporters import Reporter
-from weather_report import find_report
+from weather_report import find_reports
 from forms.find_report import SearchForm
+from datetime import date as dt
+import pymorphy2
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -20,6 +22,7 @@ weather_params = [("Облачность: ", True), ("Температура в�
                   ("Тип осадков: ", False), ("Количество осадков: ", False), ("Направление ветра: ", False),
                   ("Скорость ветра: ", False), ("Атмосферное давление: ", False)]
 measuring_units = ["", "°C", "°C", "", "мм", "", "м/c", "мм рт. ст."]
+morph = pymorphy2.MorphAnalyzer()
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -27,8 +30,8 @@ measuring_units = ["", "°C", "°C", "", "мм", "", "м/c", "мм рт. ст."]
 def index():
     form = SearchForm()
     if form.validate_on_submit():
-        ok, result = find_report(form.city.data, form.date.data)
-        if not(ok):
+        ok, result = find_reports(form.city.data, form.date.data)
+        if not ok:
             return render_template('home_page.html', title='Поиск',
                                    form=form,
                                    message="Такие данные отсутствуют")
@@ -36,13 +39,19 @@ def index():
     return render_template('home_page.html', title='Поиск', form=form)
 
 
-@app.route('/weather/<region>/<date>')
-def weather_main(region, date):
-    ok, result = find_report(region, date)
-    data = [result.clouds, result.temperature, result.water_temperature, result.precipitation_type,
-            result.precipitation_value, result.wind_direction, result.wind_speed, result.atmospheric_pressure]
-    return render_template('location.html', found=ok, place=region, data=data, headers=weather_params,
-                           units=measuring_units, date=date)
+@app.route('/weather/<region>/<date_choice>')
+def weather_main(region, date_choice):
+    ok, results = find_reports(region, date_choice)
+    data = []
+    for result in [*results[0]]:
+        if not result:
+            continue
+        data.append([result.clouds, result.temperature, result.water_temperature, result.precipitation_type,
+                     result.precipitation_value, result.wind_direction, result.wind_speed,
+                     result.atmospheric_pressure, result.date])
+    data.sort(key=lambda x: dt.strftime(x[8], '%Y-%m-%d'))
+    return render_template('location.html', found=ok, place=morph.parse(region)[0].inflect({"loct"}).word.capitalize(),
+                           data=data, headers=weather_params, units=measuring_units, date_choice=date_choice.lower())
 
 
 # Добавление новой записи о погоде
