@@ -4,6 +4,7 @@ from data.weather import Weather
 from flask_restful import abort, Api, Resource
 from data.reqparser import parser
 
+
 class WeatherResource(Resource):
     def get(self, weather_id):
         abort_if_weather_not_found(weather_id)
@@ -19,11 +20,18 @@ class WeatherResource(Resource):
         session.commit()
         return jsonify({'success': 'OK'})
 
+
+class WeatherListResource(Resource):
+    def get(self):
+        session = db_session.create_session()
+        weather = session.query(Weather).all()
+        return jsonify({'weather': [item.as_dict() for item in weather]})
+
     def post(self):
         args = parser.parse_args()
         session = db_session.create_session()
         weather = Weather(
-            location_id=args['location'],
+            location_id=args['location_id'],
             date=args['date'],
             clouds=args['clouds'],
             temperature=args['temperature'],
@@ -37,6 +45,7 @@ class WeatherResource(Resource):
         session.add(weather)
         session.commit()
         return jsonify({'success': 'OK'})
+
 
 def abort_if_weather_not_found(weather_id):
     session = db_session.create_session()

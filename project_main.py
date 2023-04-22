@@ -18,7 +18,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 api = Api(app)
-#api.add_resource(weather_resources.NewsListResource, '/api/v2/news')
+api.add_resource(data.weather_resources.WeatherListResource, '/api/v2/weather')
 api.add_resource(data.weather_resources.WeatherResource, '/api/v2/weather/<int:weather_id>')
 
 login_manager = LoginManager()
