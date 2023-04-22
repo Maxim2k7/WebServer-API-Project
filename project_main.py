@@ -10,9 +10,16 @@ from weather_report import find_report
 from data.weather import Weather
 from forms.find_report import SearchForm
 from data.locations import Location
+from flask_restful import reqparse, abort, Api, Resource
+import data.weather_resources
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+
+api = Api(app)
+#api.add_resource(weather_resources.NewsListResource, '/api/v2/news')
+api.add_resource(data.weather_resources.WeatherResource, '/api/v2/weather/<int:weather_id>')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
