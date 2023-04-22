@@ -120,7 +120,7 @@ def reporter_main():
     elif request.method == 'POST':
         db_sess = db_session.create_session()
         weather = Weather(
-            location_id = db_sess.query(Location.name).filter(Location.id == request.form['location']).first(),
+            location_id = db_sess.query(Location.id).filter(Location.name == request.form['location']).first(),
             date = request.form['date'],
             clouds = request.form['clouds'],
             temperature = request.form['temperature'],
