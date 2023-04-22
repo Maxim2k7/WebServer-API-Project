@@ -48,6 +48,7 @@ $(document).ready(function(){
 <form class="edit_form" method="post">
     <div style="width: 70%; margin: auto;  background: linear-gradient(blue, pink); border-radius: 25px; display: flex;
  flex-direction: column; justify-content: space-around;">
+        </br>
         <div style="width: 70%; margin: auto;">
             <label for="start">Дата:
                 <img height="25" src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
@@ -103,13 +104,13 @@ $(document).ready(function(){
             <label for="classSelect">Ветер</label>
             <img height="25" src="https://cdn-icons-png.flaticon.com/512/2676/2676047.png">
             <div style="margin: auto; display: flex; flex-direction: row;">
-                <input type="text" class="form-control" id="wind_direction" placeholder="Тип"
+                <input type="text" class="form-control" id="wind_direction" placeholder="Направление"
                        name="wind_direction">
-                <input type="number" id="wind_velocity" placeholder="Кол-во" name="wind_velocity" step="1"
+                <input type="number" id="wind_velocity" placeholder="Скорость" name="wind_velocity" step="1"
                        min="0" max="10000">
             </div>
         </div>
-        <!--        <img height="25" src="https://cdn-icons-png.flaticon.com/512/414/414825.png">-->
+        </br>
         <button type="submit" class="btn btn-primary">Готово</button>
     </div>
 </form>

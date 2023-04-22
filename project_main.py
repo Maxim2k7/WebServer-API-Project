@@ -9,6 +9,7 @@ from data.reporters import Reporter
 from weather_report import find_report
 from data.weather import Weather
 from forms.find_report import SearchForm
+from data.locations import Location
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -119,7 +120,7 @@ def reporter_main():
     elif request.method == 'POST':
         db_sess = db_session.create_session()
         weather = Weather(
-            location_id = 1,
+            location_id = db_sess.query(Location.name).filter(Location.id == request.form['location']).first(),
             date = request.form['date'],
             clouds = request.form['clouds'],
             temperature = request.form['temperature'],
