@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+    <div id="liveToast" class="toast fade hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+        <div class="toast-header">
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214753.png" height="20em"
+                 style="padding-right: 10px;">
+
+            <strong class="mr-auto">Дневник погоды</strong>
+            <small>💛</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            Здравствуйте, {{ current_user.name }} {{ current_user.surname }}!
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+  $('.toast').toast('show');
+});
+
+</script>
+</br>
+<form class="edit_form" method="post">
+    <div style="width: 70%; margin: auto;  background: linear-gradient(blue, pink); border-radius: 25px; display: flex;
+ flex-direction: column; justify-content: space-around;">
+        </br>
+        <div style="width: 70%; margin: auto;">
+            <label for="start">Дата:
+                <img height="25" src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
+
+                <input type="date" id="date" name="date"
+                       min="2018-01-01" max="2030-12-31">
+            </label>
+        </div>
+        </br>
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Локация</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/535/535137.png">
+            <input type="text" class="form-control" id="location" placeholder="Введите локацию" name="location">
+        </div>
+        </br>
+        <div style="width: 70%; margin: auto; display: flex; flex-direction: column;">
+            <label>Температура:
+                <input type="number" id="temperature" name="temperature" step="0.1"
+                       min="-70" max="70">
+                <img height="25"
+                     src="https://cdn-icons-png.flaticon.com/512/869/869869.png">
+            </label>
+
+            <label for="classSelect">Температура воды:
+                <input type="number" id="water_temperature" name="water_temperature" step="0.1"
+                       min="-70" max="70">
+                <img height="25" src="https://cdn-icons-png.flaticon.com/512/3274/3274854.png">
+            </label>
+            <label for="classSelect">Атмосферное давление:
+                <input type="number" id="atmospheric_pressure" name="atmospheric_pressure" step="1"
+                       min="0" max="1000">
+                <img height="25" src="https://cdn-icons-png.flaticon.com/512/4005/4005925.png">
+            </label>
+        </div>
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Облачность</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/414/414825.png">
+            <input type="text" class="form-control" id="clouds" placeholder="Облачность" name="clouds">
+        </div>
+
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Осадки</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/4958/4958619.png">
+            <div style="margin: auto; display: flex; flex-direction: row;">
+                <input type="text" class="form-control" id="precipitation_type" placeholder="Тип"
+                       name="precipitation_type">
+                <input type="number" id="precipitation_value" placeholder="Кол-во" name="precipitation_value" step="1"
+                       min="0" max="10000">
+            </div>
+        </div>
+        <div style="width: 70%; margin: auto;">
+            <label for="classSelect">Ветер</label>
+            <img height="25" src="https://cdn-icons-png.flaticon.com/512/2676/2676047.png">
+            <div style="margin: auto; display: flex; flex-direction: row;">
+                <input type="text" class="form-control" id="wind_direction" placeholder="Направление"
+                       name="wind_direction">
+                <input type="number" id="wind_velocity" placeholder="Скорость" name="wind_velocity" step="1"
+                       min="0" max="10000">
+            </div>
+        </div>
+        </br>
+        <button type="submit" class="btn btn-primary">Готово</button>
+    </div>
+    <!--    <p> Вы можете загрузить данные в формате json <a href="/reporter/load"> здесь </a></p>-->
+</form>
+{% endblock %}

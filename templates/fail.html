@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Упс!</h4>
+    <p>Внесенные вами данные не корректны, пожалуйста, попробуйте снова</p>
+    <hr>
+    <p class="mb-0">
+        <a href=" {{ page }} ">Вернуться</a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div> При помощи данного API можно:
+    <ul>
+        <li>Получить полный список всех внесенных репортажей о погоде: get запрос по адресу - <var>/api/weather</var>
+        </li>
+        <li>Получить данные о репортаже по его уникальному индификатору: get запрос по адресу - <var>/api/weather/&lt;int:weather_id&gt;</var>
+        </li>
+        <li>Удалить репортаж по его уникальному индификатор: delete запрос по адресу - <var>/api/weather/&lt;int:weather_id&gt;
+        </li>
+        <li>Создать новый репортаж: post запрос по адресу - <var>/api/weather</var></li>
+    </ul>
+    При создании нового репортажа нужно придерживаться следующей структуры файла json: </br></br>
+    <var><code>
+        {</br>
+        &nbsp;&nbsp;"location_id": 1,</br>
+        &nbsp;&nbsp;"date": "27.04.2023",</br>
+        &nbsp;&nbsp;"clouds": "NO",</br>
+        &nbsp;&nbsp;"temperature": 12,</br>
+        &nbsp;&nbsp;"water_temperature": 11,</br>
+        &nbsp;&nbsp;"precipitation_type": "rain",</br>
+        &nbsp;&nbsp;"precipitation_value": "900",</br>
+        &nbsp;&nbsp;"wind_direction": "EAST",</br>
+        &nbsp;&nbsp;"wind_velocity": 90,</br>
+        &nbsp;&nbsp;"atmospheric_pressure": 765</br>
+        }</br>
+    </code></var>
+</div>
+{% endblock %}
