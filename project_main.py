@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
-import datetime
-
 from flask import Flask, render_template, redirect, request
 from flask_login import login_user, LoginManager, login_required, logout_user
 from forms.reporter import RegisterForm, LoginForm
 from data import db_session
 from data.reporters import Reporter
-from weather_report import find_report
 from data.weather import Weather
 from weather_report import find_reports
 from forms.find_report import SearchForm
@@ -16,6 +13,7 @@ import data.weather_resources
 import json
 from datetime import date as dt
 import pymorphy2
+from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -63,7 +61,7 @@ def weather_main(region, date_choice):
         if not result:
             continue
         data.append([result.clouds, result.temperature, result.water_temperature, result.precipitation_type,
-                     result.precipitation_value, result.wind_direction, result.wind_speed,
+                     result.precipitation_value, result.wind_direction, result.wind_velocity,
                      result.atmospheric_pressure, result.date])
     data.sort(key=lambda x: dt.strftime(x[8], '%Y-%m-%d'))
     return render_template('location.html', found=ok, place=morph.parse(region)[0].inflect({"loct"}).word.capitalize(),
@@ -134,12 +132,12 @@ def reporter_registration():
 @login_required
 def reporter_main():
     if request.method == 'GET':
-        return render_template('reporter.html')
-    elif request.method == 'POST':
+        return render_template('reporter.html', dt=str(datetime.now().date()))
+    elif request.method == 'POST' and all(request.form.values()):
         db_sess = db_session.create_session()
         weather = Weather(
             location_id=int(db_sess.query(Location.id).filter(Location.name == request.form['location']).first()[0]),
-            date=request.form['date'],
+            date=datetime.strptime(request.form['date'][2:], '%y-%m-%d'),
             clouds=request.form['clouds'],
             temperature=request.form['temperature'],
             water_temperature=request.form['water_temperature'],
@@ -152,6 +150,9 @@ def reporter_main():
         db_sess.merge(weather)
         db_sess.commit()
         return render_template("success.html", page='/reporter/edit')
+    elif request.method == 'POST' and not all(request.form.values()):
+        return render_template("fail.html", page='/reporter/edit')
+
 
 # # окно, сообщающее об удачном сохранении данных
 # @app.route('/reporter/edit/success')
@@ -169,22 +170,23 @@ def load():
             res = json.loads(js.read())['weather']
             db_sess = db_session.create_session()
             weather = Weather(
-                    location_id=res['location_id'],
-                    date=res['date'],
-                    clouds=res['clouds'],
-                    temperature=res['temperature'],
-                    water_temperature=res['water_temperature'],
-                    precipitation_type=res['precipitation_type'],
-                    precipitation_value=res['precipitation_value'],
-                    wind_direction=res['wind_direction'],
-                    wind_velocity=res['wind_velocity'],
-                    atmospheric_pressure=res['atmospheric_pressure']
+                location_id=res['location_id'],
+                date=datetime.strptime(res['date'], '%d.%m.%y'),
+                clouds=res['clouds'],
+                temperature=res['temperature'],
+                water_temperature=res['water_temperature'],
+                precipitation_type=res['precipitation_type'],
+                precipitation_value=res['precipitation_value'],
+                wind_direction=res['wind_direction'],
+                wind_velocity=res['wind_velocity'],
+                atmospheric_pressure=res['atmospheric_pressure']
             )
             db_sess.merge(weather)
             db_sess.commit()
         except:
             return render_template("fail.html", page='/reporter/load')
         return render_template("success.html", page='/reporter/load')
+
 
 # выход из профиля пользователя
 @app.route('/reporter/logout')
@@ -193,10 +195,12 @@ def logout():
     logout_user()
     return redirect("/")
 
+
 # докумантация к API
 @app.route('/api/documentation')
 def api_documentation():
     return render_template('api_doc.html')
+
 
 if __name__ == "__main__":
     main()

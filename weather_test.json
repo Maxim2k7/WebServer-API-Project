@@ -1,14 +1,14 @@
 {
   "weather": {
     "location_id": 1,
-    "date": "27.04.2023",
-    "clouds": "NO",
-    "temperature": 12,
-    "water_temperature": 11,
+    "date": "24.04.23",
+    "clouds": "YES",
+    "temperature": 14,
+    "water_temperature": 12,
     "precipitation_type": "rain",
-    "precipitation_value": "900",
-    "wind_direction": "EAST",
-    "wind_velocity": 90,
-    "atmospheric_pressure": 765
+    "precipitation_value": "100",
+    "wind_direction": "WEST",
+    "wind_velocity": 70,
+    "atmospheric_pressure": 755
   }
 }

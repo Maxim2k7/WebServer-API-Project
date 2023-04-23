@@ -3,6 +3,7 @@ from data import db_session
 from data.weather import Weather
 from flask_restful import abort, Resource
 from data.reqparser import parser
+from datetime import datetime
 
 
 # Класс для одного объекта погоды
@@ -34,7 +35,7 @@ class WeatherListResource(Resource):
         session = db_session.create_session()
         weather = Weather(
             location_id=args['location_id'],
-            date=args['date'],
+            date=datetime.strptime(args['date'], '%d.%m.%y').date(),
             clouds=args['clouds'],
             temperature=args['temperature'],
             water_temperature=args['water_temperature'],
@@ -44,6 +45,7 @@ class WeatherListResource(Resource):
             wind_velocity=args['wind_velocity'],
             atmospheric_pressure=args['atmospheric_pressure'],
         )
+        print(type(weather.date))
         session.add(weather)
         session.commit()
         return jsonify({'success': 'OK'})

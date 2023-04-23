@@ -3,7 +3,7 @@ from requests import get, post, put, delete
 # создание новости
 print(post('http://127.0.0.1:8080/api/weather', json={
     'location_id': 1,
-    'date': '27.04.2023',
+    'date': '27.04.23',
     'clouds': 'NO',
     'temperature': 12,
     'water_temperature': 11,
