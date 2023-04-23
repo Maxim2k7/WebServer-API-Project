@@ -108,7 +108,7 @@ def reporter_registration():
         reporter = Reporter(
             name=form.name.data,
             surname=form.surname.data,
-            login=form.surname.data,
+            login=form.login.data,
             email=form.email.data,
         )
         reporter.set_password(form.password.data)

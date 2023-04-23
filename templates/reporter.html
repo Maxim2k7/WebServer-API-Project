@@ -14,7 +14,7 @@
             </button>
         </div>
         <div class="toast-body">
-            Здравствуйте, {{ current_user.name }}!
+            Здравствуйте, {{ current_user.name }} {{ current_user.surname }}!
         </div>
     </div>
 </div>
@@ -22,26 +22,6 @@
 $(document).ready(function(){
   $('.toast').toast('show');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
 </br>
@@ -112,6 +92,6 @@ $(document).ready(function(){
         </br>
         <button type="submit" class="btn btn-primary">Готово</button>
     </div>
-<!--    <p> Вы можете загрузить данные в формате json <a href="/reporter/load"> здесь </a></p>-->
+    <!--    <p> Вы можете загрузить данные в формате json <a href="/reporter/load"> здесь </a></p>-->
 </form>
 {% endblock %}
