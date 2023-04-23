@@ -1,10 +1,11 @@
-from flask import abort, jsonify, request
+from flask import abort, jsonify
 from data import db_session
 from data.weather import Weather
-from flask_restful import abort, Api, Resource
+from flask_restful import abort, Resource
 from data.reqparser import parser
 
 
+# Класс для одного объекта погоды
 class WeatherResource(Resource):
     def get(self, weather_id):
         abort_if_weather_not_found(weather_id)
@@ -21,6 +22,7 @@ class WeatherResource(Resource):
         return jsonify({'success': 'OK'})
 
 
+# Класс для списка объектов погоды
 class WeatherListResource(Resource):
     def get(self):
         session = db_session.create_session()
@@ -47,6 +49,7 @@ class WeatherListResource(Resource):
         return jsonify({'success': 'OK'})
 
 
+# Проверка найден ли запрашиваемый ресурс
 def abort_if_weather_not_found(weather_id):
     session = db_session.create_session()
     news = session.query(Weather).get(weather_id)

@@ -1,5 +1,6 @@
 from flask_restful import reqparse
 
+# парсер для api
 parser = reqparse.RequestParser()
 parser.add_argument('location_id', required=True, type=int)
 parser.add_argument('date', required=True)
