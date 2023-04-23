@@ -12,6 +12,7 @@ from forms.find_report import SearchForm
 from data.locations import Location
 from flask_restful import Api
 import data.weather_resources
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -140,8 +141,40 @@ def reporter_main():
         )
         db_sess.merge(weather)
         db_sess.commit()
-        return redirect('/reporter/edit')
+        return redirect('/reporter/edit/success', page='/reporter/edit')
 
+# окно, сообщающее об удачном сохранении данных
+@app.route('/reporter/edit/success')
+def success():
+    return render_template("success.html")
+
+#
+@app.route('/reporter/load', methods=['POST', 'GET'])
+def load():
+    if request.method == 'GET':
+        return render_template("load.html")
+    elif request.method == 'POST':
+        js = request.files['file']
+        res = json.loads(js.read())['weather']
+        db_sess = db_session.create_session()
+        try:
+            weather = Weather(
+                location_id=res['location_id'],
+                date=res['date'],
+                clouds=res['clouds'],
+                temperature=res['temperature'],
+                water_temperature=res['water_temperature'],
+                precipitation_type=res['precipitation_type'],
+                precipitation_value=res['precipitation_value'],
+                wind_direction=res['wind_direction'],
+                wind_velocity=res['wind_velocity'],
+                atmospheric_pressure=res['atmospheric_pressure'],
+            )
+        except:
+            return render_template("fail.html", page='/reporter/load')
+        db_sess.merge(weather)
+        db_sess.commit()
+        return render_template("success.html", page='/reporter/load')
 
 # выход из профиля пользователя
 @app.route('/reporter/logout')
@@ -150,6 +183,10 @@ def logout():
     logout_user()
     return redirect("/")
 
+# докумантация к API
+@app.route('/api/documentation')
+def api_documentation():
+    return render_template('api_doc.html')
 
 if __name__ == "__main__":
     main()

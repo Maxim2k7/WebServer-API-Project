@@ -6,7 +6,7 @@ from sqlalchemy_serializer import SerializerMixin
 
 
 class Weather(SqlAlchemyBase, SerializerMixin):
-    __tablename__ = 'weather'
+    __tablename__ = "weather"
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
@@ -21,7 +21,7 @@ class Weather(SqlAlchemyBase, SerializerMixin):
     wind_direction = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     wind_velocity = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     atmospheric_pressure = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
-    location = orm.relationship('Location')
+    location = orm.relationship("Location")
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
