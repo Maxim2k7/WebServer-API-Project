@@ -141,39 +141,39 @@ def reporter_main():
         )
         db_sess.merge(weather)
         db_sess.commit()
-        return redirect('/reporter/edit/success', page='/reporter/edit')
+        return render_template("success.html", page='/reporter/edit')
 
-# окно, сообщающее об удачном сохранении данных
-@app.route('/reporter/edit/success')
-def success():
-    return render_template("success.html")
+# # окно, сообщающее об удачном сохранении данных
+# @app.route('/reporter/edit/success')
+# def success():
+#     return render_template("success.html")
 
-#
+# загрузка данных в формате json
 @app.route('/reporter/load', methods=['POST', 'GET'])
 def load():
     if request.method == 'GET':
         return render_template("load.html")
     elif request.method == 'POST':
-        js = request.files['file']
-        res = json.loads(js.read())['weather']
-        db_sess = db_session.create_session()
         try:
+            js = request.files['file']
+            res = json.loads(js.read())['weather']
+            db_sess = db_session.create_session()
             weather = Weather(
-                location_id=res['location_id'],
-                date=res['date'],
-                clouds=res['clouds'],
-                temperature=res['temperature'],
-                water_temperature=res['water_temperature'],
-                precipitation_type=res['precipitation_type'],
-                precipitation_value=res['precipitation_value'],
-                wind_direction=res['wind_direction'],
-                wind_velocity=res['wind_velocity'],
-                atmospheric_pressure=res['atmospheric_pressure'],
+                    location_id=res['location_id'],
+                    date=res['date'],
+                    clouds=res['clouds'],
+                    temperature=res['temperature'],
+                    water_temperature=res['water_temperature'],
+                    precipitation_type=res['precipitation_type'],
+                    precipitation_value=res['precipitation_value'],
+                    wind_direction=res['wind_direction'],
+                    wind_velocity=res['wind_velocity'],
+                    atmospheric_pressure=res['atmospheric_pressure']
             )
+            db_sess.merge(weather)
+            db_sess.commit()
         except:
             return render_template("fail.html", page='/reporter/load')
-        db_sess.merge(weather)
-        db_sess.commit()
         return render_template("success.html", page='/reporter/load')
 
 # выход из профиля пользователя
