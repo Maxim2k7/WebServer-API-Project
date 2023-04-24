@@ -169,22 +169,22 @@ def load():
     elif request.method == 'POST':
         try:
             js = request.files['file']
-            res = json.loads(js.read())['weather']
             db_sess = db_session.create_session()
-            weather = Weather(
-                location_id=res['location_id'],
-                date=datetime.strptime(res['date'], '%d.%m.%y'),
-                clouds=res['clouds'],
-                temperature=res['temperature'],
-                water_temperature=res['water_temperature'],
-                precipitation_type=res['precipitation_type'],
-                precipitation_value=res['precipitation_value'],
-                wind_direction=res['wind_direction'],
-                wind_velocity=res['wind_velocity'],
-                atmospheric_pressure=res['atmospheric_pressure']
-            )
-            db_sess.merge(weather)
-            db_sess.commit()
+            for res in json.loads(js.read())['weather']:
+                weather = Weather(
+                    location_id=res['location_id'],
+                    date=datetime.strptime(res['date'], '%d.%m.%y'),
+                    clouds=res['clouds'],
+                    temperature=res['temperature'],
+                    water_temperature=res['water_temperature'],
+                    precipitation_type=res['precipitation_type'],
+                    precipitation_value=res['precipitation_value'],
+                    wind_direction=res['wind_direction'],
+                    wind_velocity=res['wind_velocity'],
+                    atmospheric_pressure=res['atmospheric_pressure']
+                )
+                db_sess.merge(weather)
+                db_sess.commit()
         except:
             return render_template("fail.html", page='/reporter/load')
         return render_template("success.html", page='/reporter/load')
