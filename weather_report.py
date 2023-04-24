@@ -16,7 +16,8 @@ def find_report(region, date):
         return
     location_id = query[0].id
     if date != "-":
-        query = db_sess.query(Weather).filter(Weather.location_id.like(location_id), Weather.date >= date)
+        query = db_sess.query(Weather).filter(Weather.location_id.like(location_id),
+                                              Weather.date.between(date, dt.today()))
     else:
         query = db_sess.query(Weather).filter(Weather.location_id.like(location_id))
     if query.count() == 0:

@@ -100,7 +100,7 @@ def reporter_registration():
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
-            return render_template('register.html', title='Регистрация',
+            return render_template('registration.html', title='Регистрация',
                                    form=form,
                                    message="Пароли не совпадают")
         db_sess = db_session.create_session()
@@ -147,6 +147,8 @@ def reporter_main():
             wind_velocity=request.form['wind_velocity'],
             atmospheric_pressure=request.form['atmospheric_pressure'],
         )
+        for old_weather in db_sess.query(Weather).filter(Weather.date.like(datetime.date(weather.date))):
+            db_sess.delete(old_weather)
         db_sess.merge(weather)
         db_sess.commit()
         return render_template("success.html", page='/reporter/edit')

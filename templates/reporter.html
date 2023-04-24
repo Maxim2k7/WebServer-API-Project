@@ -34,7 +34,7 @@ $(document).ready(function(){
                 <img height="25" src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png">
 
                 <input type="date" id="date" name="date" value="{{ dt }}"
-                       min="2018-01-01" max="2030-12-31">
+                       min="2001-01-01" max="2030-12-31">
             </label>
         </div>
         </br>
@@ -46,14 +46,14 @@ $(document).ready(function(){
         </br>
         <div style="width: 70%; margin: auto; display: flex; flex-direction: column;">
             <label>Температура:
-                <input type="number" id="temperature" name="temperature" step="0.1"
+                <input type="number" id="temperature" name="temperature" step="1"
                        min="-70" max="70">
                 <img height="25"
                      src="https://cdn-icons-png.flaticon.com/512/869/869869.png">
             </label>
 
             <label for="classSelect">Температура воды:
-                <input type="number" id="water_temperature" name="water_temperature" step="0.1"
+                <input type="number" id="water_temperature" name="water_temperature" step="1"
                        min="-70" max="70">
                 <img height="25" src="https://cdn-icons-png.flaticon.com/512/3274/3274854.png">
             </label>
@@ -66,7 +66,8 @@ $(document).ready(function(){
         <div style="width: 70%; margin: auto;">
             <label for="classSelect">Облачность</label>
             <img height="25" src="https://cdn-icons-png.flaticon.com/512/414/414825.png">
-            <input type="text" class="form-control" id="clouds" placeholder="Облачность" name="clouds">
+            <input type="text" class="form-control" id="clouds"
+                   placeholder="Облачность (0 - ясно, 1 - переменная облачность, 2 - облачность)" name="clouds">
         </div>
 
         <div style="width: 70%; margin: auto;">
