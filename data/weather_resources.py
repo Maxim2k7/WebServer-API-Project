@@ -35,7 +35,7 @@ class WeatherListResource(Resource):
         session = db_session.create_session()
         weather = Weather(
             location_id=args['location_id'],
-            date=datetime.strptime(args['date'], '%d.%m.%y').date(),
+            date=datetime.strptime(args['date'][2:], '%y-%m-%d').date(),
             clouds=args['clouds'],
             temperature=args['temperature'],
             water_temperature=args['water_temperature'],
