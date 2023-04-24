@@ -14,20 +14,33 @@
     </div>
 </form>
 Пример структуры файла: </br></br>
-<var><code>
-{</br>
-&nbsp;&nbsp;"weather": {</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"location_id": 1,</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"date": "27.04.23",</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"clouds": "NO",</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"temperature": 12,</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"water_temperature": 11,</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"precipitation_type": "rain",</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"precipitation_value": "900",</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"wind_direction": "EAST",</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"wind_velocity": 90,</br>
-&nbsp;&nbsp;&nbsp;&nbsp;"atmospheric_pressure": 765</br>
-&nbsp;&nbsp;}</br>
-}</br>
-</code></var>
+<pre><var>
+{
+  "weather": [
+    {
+      "location_id": 1,
+      "date": "28.04.23",
+      "clouds": "YES",
+      "temperature": 14,
+      "water_temperature": 12,
+      "precipitation_type": "rain",
+      "precipitation_value": "100",
+      "wind_direction": "WEST",
+      "wind_velocity": 70,
+      "atmospheric_pressure": 755
+    },
+    {
+      "location_id": 1,
+      "date": "29.04.23",
+      "clouds": "YES",
+      "temperature": 14,
+      "water_temperature": 12,
+      "precipitation_type": "rain",
+      "precipitation_value": "100",
+      "wind_direction": "WEST",
+      "wind_velocity": 70,
+      "atmospheric_pressure": 755
+    }
+  ]
+}</var></pre>
 {% endblock %}
