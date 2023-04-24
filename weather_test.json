@@ -2,25 +2,25 @@
   "weather": [
     {
       "location_id": 1,
-      "date": "28.04.23",
-      "clouds": "YES",
+      "date": "2023-04-28",
+      "clouds": 2,
       "temperature": 14,
       "water_temperature": 12,
-      "precipitation_type": "rain",
-      "precipitation_value": "100",
-      "wind_direction": "WEST",
+      "precipitation_type": "Дождь",
+      "precipitation_value": 100,
+      "wind_direction": "W",
       "wind_velocity": 70,
       "atmospheric_pressure": 755
     },
     {
       "location_id": 1,
-      "date": "29.04.23",
-      "clouds": "YES",
+      "date": "2023-04-29",
+      "clouds": 2,
       "temperature": 14,
       "water_temperature": 12,
-      "precipitation_type": "rain",
-      "precipitation_value": "100",
-      "wind_direction": "WEST",
+      "precipitation_type": "Дождь",
+      "precipitation_value": 100,
+      "wind_direction": "W",
       "wind_velocity": 70,
       "atmospheric_pressure": 755
     }

@@ -173,7 +173,7 @@ def load():
             for res in json.loads(js.read())['weather']:
                 weather = Weather(
                     location_id=res['location_id'],
-                    date=datetime.strptime(res['date'], '%d.%m.%y'),
+                    date=datetime.strptime(res['date'], '%Y-%m-%d'),
                     clouds=res['clouds'],
                     temperature=res['temperature'],
                     water_temperature=res['water_temperature'],
