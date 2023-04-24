@@ -163,6 +163,7 @@ def reporter_main():
 
 # загрузка данных в формате json
 @app.route('/reporter/load', methods=['POST', 'GET'])
+@login_required
 def load():
     if request.method == 'GET':
         return render_template("load.html")
