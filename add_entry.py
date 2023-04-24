@@ -23,7 +23,7 @@ def main():
         new_report.precipitation_type = choice(["Дождь", "Снег", "Град", "Нет осадков"])
         new_report.precipitation_value = randint(1, 100) if new_report.precipitation_type != "Нет осадков" else 0
         new_report.wind_direction = choice(["N", "NE", "E", "SE", "S", "SW", "W", "NW", "Нет ветра"])
-        new_report.wind_speed = randint(1, 10) if new_report.wind_direction != "Нет ветра" else 0
+        new_report.wind_velocity = randint(1, 10) if new_report.wind_direction != "Нет ветра" else 0
         new_report.atmospheric_pressure = randint(95, 106)
         if new_report.date <= datetime.today().date():
             db_sess.add(new_report)
